@@ -22,22 +22,37 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 //#define USE_MATRIX_I2
 
-#define QUICK_TAP_TERM 0
-#define TAPPING_TERM 190
+#define TAPPING_TERM 200
+#define TAPPING_TERM_PER_KEY
+
+#define RGB_MATRIX_KEYPRESSES // reacts to keypresses
+#define RGB_MATRIX_SLEEP // turn off effects when suspended
+
+#define ENABLE_RGB_MATRIX_SOLID_COLOR
+#define ENABLE_RGB_MATRIX_TYPING_HEATMAP
+#define ENABLE_RGB_MATRIX_SOLID_SPLASH
+
 
 #ifdef RGBLIGHT_ENABLE
-    #define RGBLIGHT_EFFECT_BREATHING
+    #define RGB_MATRIX_FRAMEBUFFER_EFFECTS
     #define RGBLIGHT_EFFECT_RAINBOW_MOOD
     #define RGBLIGHT_EFFECT_RAINBOW_SWIRL
-    #define RGBLIGHT_EFFECT_SNAKE
-    #define RGBLIGHT_EFFECT_KNIGHT
-    #define RGBLIGHT_EFFECT_CHRISTMAS
     #define RGBLIGHT_EFFECT_STATIC_GRADIENT
     #define RGBLIGHT_EFFECT_RGB_TEST
-    #define RGBLIGHT_EFFECT_ALTERNATING
-    #define RGBLIGHT_EFFECT_TWINKLE
-    #define RGBLIGHT_LIMIT_VAL 120
-    #define RGBLIGHT_HUE_STEP 10
-    #define RGBLIGHT_SAT_STEP 17
-    #define RGBLIGHT_VAL_STEP 17
+    #define RGB_MATRIX_MAXIMUM_BRIGHTNESS 150
+    #define RGB_MATRIX_HUE_STEP 8
+    #define RGB_MATRIX_SAT_STEP 8
+    #define RGB_MATRIX_VAL_STEP 8
+    #define RGB_MATRIX_SPD_STEP 10
 #endif
+
+#define MOUSEKEY_DELAY              10
+#define MOUSEKEY_INTERVAL           20
+#define MOUSEKEY_MOVE_DELTA	        3
+#define MOUSEKEY_MAX_SPEED	        3
+#define MOUSEKEY_TIME_TO_MAX	    30
+#define MOUSEKEY_WHEEL_DELAY	    10
+#define MOUSEKEY_WHEEL_INTERVAL	    80
+#define MOUSEKEY_WHEEL_DELTA	    1
+#define MOUSEKEY_WHEEL_MAX_SPEED	8
+#define MOUSEKEY_WHEEL_TIME_TO_MAX	40

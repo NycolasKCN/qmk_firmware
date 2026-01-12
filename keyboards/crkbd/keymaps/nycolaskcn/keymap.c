@@ -73,7 +73,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,--------------------------------------------------------------.      ,--------------------------------------------------------------.
       _______,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5, MS_WHLL,        MS_WHLU,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0, _______,
   //|--------+--------+--------+--------+--------+--------+--------|      |--------+--------+--------+--------+--------+--------+--------|
-      KC_LSFT, MS_ACL2, MS_BTN1,   MS_UP, MS_BTN2, MS_WHLU, MS_WHLR,        MS_WHLD, KC_LEFT,   KC_UP, KC_DOWN, KC_RGHT, XXXXXXX, _______,
+      KC_LSFT, MS_ACL2, MS_BTN1,   MS_UP, MS_BTN2, MS_WHLU, MS_WHLR,        MS_WHLD, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, XXXXXXX, _______,
   //|--------+--------+--------+--------+--------+--------+--------|      |--------+--------+--------+--------+--------+--------+--------|
       _______, MS_ACL0, MS_LEFT, MS_DOWN, MS_RGHT, MS_WHLD,                          KC_HOME, KC_PGDN, KC_PGUP,  KC_END,  KC_DEL, _______,
   //|--------+--------+--------+--------+--------+--------+--------|      |--------+--------+--------+--------+--------+--------+--------|
@@ -85,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,--------------------------------------------------------------.      ,-------------------------------------------------------------------------.
       _______, S(KC_1), S(KC_2), S(KC_3), S(KC_4), S(KC_5), _______,        _______,     S(KC_6),   S(KC_7),    S(KC_8),   S(KC_9), S(KC_0), _______,
   //|--------+--------+--------+--------+--------+--------+--------|      |--------+------------+----------+-----------+----------+--------+--------|
-      _______,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5, _______,        _______,     KC_MINS,    KC_EQL, S(KC_BSLS),   KC_LBRC, KC_LBRC,  KC_GRV,
+      _______,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5, _______,        _______,     KC_MINS,    KC_EQL, S(KC_BSLS),   KC_LBRC, KC_RBRC,  KC_GRV,
   //|--------+--------+--------+--------+--------+--------+--------|      |--------+------------+----------+-----------+----------+--------+--------|
       _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                          S(KC_MINUS), S(KC_EQL), S(KC_COMM), S(KC_DOT), KC_BSLS, _______,
   //|--------+--------+--------+--------+--------+--------+--------|      |--------+------------+----------+-----------+----------+--------+--------|
@@ -226,7 +226,7 @@ static td_tap_t spc_tap_state = {
 
 void spc_finished(tap_dance_state_t *state, void *user_data) {
     spc_tap_state.state = cur_dance(state);
-    switch (sft_tap_state.state) {
+    switch (spc_tap_state.state) {
         case TD_SINGLE_TAP: tap_code(KC_SPACE); break;
         case TD_SINGLE_HOLD: layer_on(1); break;
         case TD_DOUBLE_TAP: tap_code(KC_LGUI); break;
@@ -236,7 +236,7 @@ void spc_finished(tap_dance_state_t *state, void *user_data) {
 }
 
 void spc_reset(tap_dance_state_t *state, void *user_data) {
-    switch (sft_tap_state.state) {
+    switch (spc_tap_state.state) {
         case TD_SINGLE_TAP: break;
         case TD_SINGLE_HOLD: layer_off(1); break;
         case TD_DOUBLE_TAP: break;
@@ -253,9 +253,9 @@ static td_tap_t ent_tap_state = {
 
 void ent_finished(tap_dance_state_t *state, void *user_data) {
     ent_tap_state.state = cur_dance(state);
-    switch (sft_tap_state.state) {
-        case TD_SINGLE_TAP: tap_code(KC_SPACE); break;
-        case TD_SINGLE_HOLD: layer_on(1); break;
+    switch (ent_tap_state.state) {
+        case TD_SINGLE_TAP: tap_code(KC_ENT); break;
+        case TD_SINGLE_HOLD: layer_on(2); break;
         case TD_DOUBLE_TAP: tap_code(KC_LGUI); break;
         case TD_DOUBLE_HOLD: register_code(KC_LGUI); break;
         default: break;
@@ -263,7 +263,7 @@ void ent_finished(tap_dance_state_t *state, void *user_data) {
 }
 
 void ent_reset(tap_dance_state_t *state, void *user_data) {
-    switch (sft_tap_state.state) {
+    switch (ent_tap_state.state) {
         case TD_SINGLE_TAP: break;
         case TD_SINGLE_HOLD: layer_off(2); break;
         case TD_DOUBLE_TAP: break;
@@ -278,3 +278,13 @@ tap_dance_action_t tap_dance_actions[] = {
     [SPC_G_MO] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, spc_finished, spc_reset),
     [ENT_G_MO] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, ent_finished, ent_reset)
 };
+
+// Set a long-ish tapping term for tap-dance keys
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case QK_TAP_DANCE ... QK_TAP_DANCE_MAX:
+            return TAPPING_TERM - 20;
+        default:
+            return TAPPING_TERM;
+    }
+}
