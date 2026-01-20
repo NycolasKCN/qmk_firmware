@@ -25,6 +25,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define TAPPING_TERM 200
 #define TAPPING_TERM_PER_KEY
 
+#define HOLD_ON_OTHER_KEY_PRESS
+
 #define RGB_MATRIX_KEYPRESSES // reacts to keypresses
 #define RGB_MATRIX_SLEEP // turn off effects when suspended
 
@@ -47,10 +49,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #endif
 
 #define MOUSEKEY_DELAY              10
-#define MOUSEKEY_INTERVAL           20
-#define MOUSEKEY_MOVE_DELTA	        3
+#define MOUSEKEY_INTERVAL           15
+#define MOUSEKEY_MOVE_DELTA	        5
 #define MOUSEKEY_MAX_SPEED	        3
-#define MOUSEKEY_TIME_TO_MAX	    30
+#define MOUSEKEY_TIME_TO_MAX	    25
+
 #define MOUSEKEY_WHEEL_DELAY	    10
 #define MOUSEKEY_WHEEL_INTERVAL	    80
 #define MOUSEKEY_WHEEL_DELTA	    1
