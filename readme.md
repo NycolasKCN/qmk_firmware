@@ -1,6 +1,6 @@
 # My layouts
 ## Corne v4.1
-![Corne layout]("/nycolaskcn.png")
+![Corne layout](/assets/nycolaskcn.png)
 
 ---
 
