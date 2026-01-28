@@ -34,7 +34,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define ENABLE_RGB_MATRIX_TYPING_HEATMAP
 #define ENABLE_RGB_MATRIX_SOLID_SPLASH
 
-
 #ifdef RGBLIGHT_ENABLE
     #define RGB_MATRIX_FRAMEBUFFER_EFFECTS
     #define RGBLIGHT_EFFECT_RAINBOW_MOOD

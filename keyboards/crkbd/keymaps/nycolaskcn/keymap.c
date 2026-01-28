@@ -44,14 +44,11 @@ enum {
 
 td_state_t cur_dance(tap_dance_state_t *state);
 
-// For the x tap dance. Put it here so it can be used in any keymap
 void sft_finished(tap_dance_state_t *state, void *user_data);
 void sft_reset(tap_dance_state_t *state, void *user_data);
 
-
 void spc_finished(tap_dance_state_t *state, void *user_data);
 void spc_reset(tap_dance_state_t *state, void *user_data);
-
 
 void ent_finished(tap_dance_state_t *state, void *user_data);
 void ent_reset(tap_dance_state_t *state, void *user_data);
