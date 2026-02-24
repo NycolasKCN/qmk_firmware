@@ -23,16 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define USE_MATRIX_I2
 
 #define TAPPING_TERM 200
-#define TAPPING_TERM_PER_KEY
-
 #define HOLD_ON_OTHER_KEY_PRESS
-
-#define RGB_MATRIX_KEYPRESSES // reacts to keypresses
-#define RGB_MATRIX_SLEEP // turn off effects when suspended
-
-#define ENABLE_RGB_MATRIX_SOLID_COLOR
-#define ENABLE_RGB_MATRIX_TYPING_HEATMAP
-#define ENABLE_RGB_MATRIX_SOLID_SPLASH
 
 #ifdef RGBLIGHT_ENABLE
     #define RGB_MATRIX_FRAMEBUFFER_EFFECTS
