@@ -37,42 +37,34 @@ typedef struct {
 
 // Tap dance enums
 enum {
-    SFT_CAPS,
-    SPC_G_MO,
-    ENT_G_MO,
+    G_MO,
 };
 
 td_state_t cur_dance(tap_dance_state_t *state);
 
-void sft_finished(tap_dance_state_t *state, void *user_data);
-void sft_reset(tap_dance_state_t *state, void *user_data);
-
-void spc_finished(tap_dance_state_t *state, void *user_data);
-void spc_reset(tap_dance_state_t *state, void *user_data);
-
-void ent_finished(tap_dance_state_t *state, void *user_data);
-void ent_reset(tap_dance_state_t *state, void *user_data);
+void gui_finished(tap_dance_state_t *state, void *user_data);
+void gui_reset(tap_dance_state_t *state, void *user_data);
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [0] = LAYOUT_split_3x6_3_ex2(
-  //,------------------------------------------------------------------------.      ,----------------------------------------------------------------------------------.
-           KC_ESC,    KC_Q,    KC_W,    KC_E,    KC_R,         KC_T, MS_WHLU,        KC_VOLU,         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,               KC_BSPC,
-  //|-------------+--------+--------+--------+--------+-------------+--------|      |--------+-------------+--------+--------+--------+--------+-----------------------|
-      TD(SFT_CAPS),    KC_A,    KC_S,    KC_D,    KC_F,         KC_G, MS_WHLD,        KC_VOLD,         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, MT(MOD_RSFT, KC_QUOT),
-  //|-------------+--------+--------+--------+--------+-------------+--------|      |--------+-------------+--------+--------+--------+--------+-----------------------|
-           KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_V,         KC_B,                                  KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  MT(MOD_RCTL, KC_TAB),
-  //|-------------+--------+--------+--------+--------+-------------+--------|      |--------+-------------+--------+--------+--------+--------+-----------------------|
-                                              KC_LALT, TD(SPC_G_MO),    MO(3),          MO(3), TD(ENT_G_MO),   MO(4)
-                                           //`-------------------------------'      `-------------------------------'
+  //,---------------------------------------------------------------------.      ,------------------------------------------------------------------------------------.
+       KC_ESC,    KC_Q,    KC_W,    KC_E,    KC_R,         KC_T, MS_WHLU,          KC_VOLU,           KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,               KC_BSPC,
+  //|--------+--------+--------+--------+--------+---------------+--------|      |--------+---------------+--------+--------+--------+--------+-----------------------|
+      KC_LSFT,    KC_A,    KC_S,    KC_D,    KC_F,         KC_G, MS_WHLD,          KC_VOLD,           KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, MT(MOD_RSFT, KC_QUOT),
+  //|--------+--------+--------+--------+--------+---------------+--------|      |--------+---------------+--------+--------+--------+--------+-----------------------|
+      KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_V,         KC_B,                                      KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  MT(MOD_RCTL, KC_TAB),
+  //|--------+--------+--------+--------+--------+---------------+--------|      |--------+---------------+--------+--------+--------+--------+-----------------------|
+                                         KC_LALT, LT(1, KC_SPC), TD(G_MO),        TD(G_MO), LT(2, KC_ENT),   MO(4)
+                                      //`---------------------------------'      `---------------------------------'
   ),
 
     [1] = LAYOUT_split_3x6_3_ex2(
   //,--------------------------------------------------------------.      ,--------------------------------------------------------------.
       _______,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5, MS_WHLL,        MS_WHLU,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0, _______,
   //|--------+--------+--------+--------+--------+--------+--------|      |--------+--------+--------+--------+--------+--------+--------|
-      KC_LSFT, MS_ACL2, MS_BTN1,   MS_UP, MS_BTN2, MS_WHLU, MS_WHLR,        MS_WHLD, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, XXXXXXX, _______,
+      _______, MS_ACL2, MS_BTN1,   MS_UP, MS_BTN2, MS_WHLU, MS_WHLR,        MS_WHLD, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, KC_CAPS, _______,
   //|--------+--------+--------+--------+--------+--------+--------|      |--------+--------+--------+--------+--------+--------+--------|
       _______, MS_ACL0, MS_LEFT, MS_DOWN, MS_RGHT, MS_WHLD,                          KC_HOME, KC_PGDN, KC_PGUP,  KC_END,  KC_DEL, _______,
   //|--------+--------+--------+--------+--------+--------+--------|      |--------+--------+--------+--------+--------+--------+--------|
@@ -88,8 +80,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|----------+--------+--------+--------------+--------+--------+--------|      |--------+------------+----------+-----------+----------+--------+--------|
         _______, XXXXXXX, XXXXXXX, ALGR(KC_COMM), XXXXXXX, XXXXXXX,                          S(KC_MINUS), S(KC_EQL), S(KC_COMM), S(KC_DOT), KC_BSLS, _______,
   //|----------+--------+--------+--------------+--------+--------+--------|      |--------+------------+----------+-----------+----------+--------+--------|
-                                            _______,   MO(5), _______,        _______, _______, _______
-                                      //`--------------------------'      `--------------------------'
+                                                  _______,   MO(5), _______,        _______, _______, _______
+                                              //`--------------------------'      `--------------------------'
   ),
 
 
@@ -102,8 +94,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+---------+--------+--------+---------+--------+--------|      |--------+--------+--------+-----------+----------+-----------+--------|
       _______,  G(KC_Z), G(KC_S), G(KC_C),  G(KC_V), G(KC_B),                          G(KC_N), G(KC_M), G(KC_COMM), G(KC_DOT), G(KC_SLSH), _______,
   //|--------+---------+--------+--------+---------+--------+--------|      |--------+--------+--------+-----------+----------+-----------+--------|
-                                          _______, _______, _______,        _______, _______, _______
-                                      //`--------------------------'      `--------------------------'
+                                            _______, _______, _______,        _______, _______, _______
+                                        //`--------------------------'      `--------------------------'
   ),
 
     [4] = LAYOUT_split_3x6_3_ex2(
@@ -191,102 +183,59 @@ td_state_t cur_dance(tap_dance_state_t *state) {
     } else return TD_UNKNOWN;
 }
 
-static td_tap_t sft_tap_state = {
+static td_tap_t gui_tap_state = {
     .is_press_action = true,
     .state = TD_NONE
 };
 
-void sft_finished(tap_dance_state_t *state, void *user_data) {
-    sft_tap_state.state = cur_dance(state);
-    switch (sft_tap_state.state) {
-        case TD_SINGLE_TAP: register_code(KC_LEFT_SHIFT); break;
-        case TD_SINGLE_HOLD: register_code(KC_LEFT_SHIFT); break;
-        case TD_DOUBLE_TAP: tap_code(KC_CAPS_LOCK); break;
-        case TD_DOUBLE_HOLD: register_code(KC_LEFT_SHIFT); break;
-        default: break;
-    }
-}
-
-void sft_reset(tap_dance_state_t *state, void *user_data) {
-    switch (sft_tap_state.state) {
-        case TD_SINGLE_TAP: unregister_code(KC_LEFT_SHIFT); break;
-        case TD_SINGLE_HOLD: unregister_code(KC_LEFT_SHIFT); break;
-        case TD_DOUBLE_TAP: break;
-        case TD_DOUBLE_HOLD: unregister_code(KC_LEFT_SHIFT); break;
-        default: break;
-    }
-    sft_tap_state.state = TD_NONE;
-}
-
-static td_tap_t spc_tap_state = {
-    .is_press_action = true,
-    .state = TD_NONE
-};
-
-void spc_finished(tap_dance_state_t *state, void *user_data) {
-    spc_tap_state.state = cur_dance(state);
-    switch (spc_tap_state.state) {
-        case TD_SINGLE_TAP: tap_code(KC_SPACE); break;
-        case TD_SINGLE_HOLD: layer_on(1); break;
+void gui_finished(tap_dance_state_t *state, void *user_data) {
+    gui_tap_state.state = cur_dance(state);
+    switch (gui_tap_state.state) {
+        case TD_SINGLE_TAP: tap_code(KC_LGUI); break;
+        case TD_SINGLE_HOLD: layer_on(3); break;
         case TD_DOUBLE_TAP: tap_code(KC_LGUI); break;
         case TD_DOUBLE_HOLD: register_code(KC_LGUI); break;
         default: break;
     }
 }
 
-void spc_reset(tap_dance_state_t *state, void *user_data) {
-    switch (spc_tap_state.state) {
+void gui_reset(tap_dance_state_t *state, void *user_data) {
+    switch (gui_tap_state.state) {
         case TD_SINGLE_TAP: break;
-        case TD_SINGLE_HOLD: layer_off(1); break;
+        case TD_SINGLE_HOLD: layer_off(3); break;
         case TD_DOUBLE_TAP: break;
         case TD_DOUBLE_HOLD: unregister_code(KC_LGUI); break;
         default: break;
     }
-    spc_tap_state.state = TD_NONE;
-}
-
-static td_tap_t ent_tap_state = {
-    .is_press_action = true,
-    .state = TD_NONE
-};
-
-void ent_finished(tap_dance_state_t *state, void *user_data) {
-    ent_tap_state.state = cur_dance(state);
-    switch (ent_tap_state.state) {
-        case TD_SINGLE_TAP: tap_code(KC_ENT); break;
-        case TD_SINGLE_HOLD: layer_on(2); break;
-        case TD_DOUBLE_TAP: tap_code(KC_LGUI); break;
-        case TD_DOUBLE_HOLD: register_code(KC_LGUI); break;
-        default: break;
-    }
-}
-
-void ent_reset(tap_dance_state_t *state, void *user_data) {
-    switch (ent_tap_state.state) {
-        case TD_SINGLE_TAP: break;
-        case TD_SINGLE_HOLD: layer_off(2); break;
-        case TD_DOUBLE_TAP: break;
-        case TD_DOUBLE_HOLD: unregister_code(KC_LGUI); break;
-        default: break;
-    }
-    ent_tap_state.state = TD_NONE;
+    gui_tap_state.state = TD_NONE;
 }
 
 tap_dance_action_t tap_dance_actions[] = {
-    [SFT_CAPS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, sft_finished, sft_reset),
-    [SPC_G_MO] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, spc_finished, spc_reset),
-    [ENT_G_MO] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, ent_finished, ent_reset)
+    [G_MO] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, gui_finished, gui_reset)
 };
 
 // Set a long-ish tapping term for tap-dance keys
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case QK_TAP_DANCE ... QK_TAP_DANCE_MAX:
-            if (TD(SFT_CAPS)) return 225;
-            if (TD(SPC_G_MO)) return 210;
-            if (TD(ENT_G_MO)) return 190;
+            if (TD(G_MO)) return 225;
             return TAPPING_TERM;
+
+        case LT(2, KC_ENT):
+            return 180;
         default:
             return TAPPING_TERM;
     }
 }
+
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case LT(2, KC_ENT):
+            // Immediately select the hold action when another key is pressed.
+            return true;
+        default:
+            // Do not select the hold action when another key is pressed.
+            return false;
+    }
+}
+

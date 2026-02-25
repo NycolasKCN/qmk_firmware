@@ -22,8 +22,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 //#define USE_MATRIX_I2
 
-#define TAPPING_TERM 200
+#define TAPPING_TERM 500
 #define HOLD_ON_OTHER_KEY_PRESS
+#define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
+#define PERMISSIVE_HOLD
 
 #ifdef RGBLIGHT_ENABLE
     #define RGB_MATRIX_FRAMEBUFFER_EFFECTS
