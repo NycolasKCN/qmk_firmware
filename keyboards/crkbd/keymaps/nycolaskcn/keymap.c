@@ -217,10 +217,10 @@ tap_dance_action_t tap_dance_actions[] = {
 // Set a long-ish tapping term for tap-dance keys
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case QK_TAP_DANCE ... QK_TAP_DANCE_MAX:
-            return 1;
+        case TD(G_MO):
+            return TAPPING_TERM - 105;
         case LT(2, KC_ENT):
-            return 190;
+            return TAPPING_TERM - 90;
         default:
             return TAPPING_TERM;
     }
