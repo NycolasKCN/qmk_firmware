@@ -16,11 +16,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <stdint.h>
 #include "action.h"
-#include "keycodes.h"
+#include "action_layer.h"
 #include "modifiers.h"
-#include "quantum_keycodes.h"
 #include QMK_KEYBOARD_H
 
 #ifdef CONSOLE_ENABLE
@@ -370,8 +368,10 @@ void gui_finished(tap_dance_state_t *state, void *user_data) {
             tap_code(KC_LGUI);
             break;
         case TD_DOUBLE_HOLD:
-            register_code(KC_LGUI);
+            layer_on(FNK_NPAD);
             break;
+        case TD_TRIPLE_HOLD:
+            register_mods(MOD_LGUI);
         default:
             break;
     }
@@ -389,8 +389,10 @@ void gui_reset(tap_dance_state_t *state, void *user_data) {
         case TD_DOUBLE_TAP:
             break;
         case TD_DOUBLE_HOLD:
-            unregister_code(KC_LGUI);
+            layer_off(FNK_NPAD);
             break;
+        case TD_TRIPLE_HOLD:
+            unregister_mods(MOD_LGUI);
         default:
             break;
     }
