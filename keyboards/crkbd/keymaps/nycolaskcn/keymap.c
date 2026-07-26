@@ -18,14 +18,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "action.h"
 #include "action_layer.h"
+#include "keycodes.h"
 #include "modifiers.h"
 #include QMK_KEYBOARD_H
 
 #ifdef CONSOLE_ENABLE
-// Se o console estiver habilitado, o macro chama a função
 #    define debug(str) uprintf(str)
 #else
-// Se não estiver, o macro é substituído por um espaço vazio
 #    define debug(str)
 #endif
 
@@ -88,11 +87,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         //-----------------------------------------------------------------------------------------------------------------||
         _______, KC_1, KC_2, KC_3, KC_4, KC_5, MS_WHLL, MS_WHLU, KC_6, KC_7, KC_8, KC_9, KC_0, _______,
         //-----------------------------------------------------------------------------------------------------------------||
-        _______, MS_ACL2, MS_BTN1, MS_UP, MS_BTN2, MS_WHLU, MS_WHLR, MS_WHLD, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_CAPS, _______,
+        _______, MS_BTN2, MS_BTN1, MS_UP, MS_BTN2, MS_WHLU, MS_WHLR, MS_BTN3, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_CAPS, _______,
         //-----------------------------------------------------------------------------------------------------------------||
-        _______, MS_ACL0, MS_LEFT, MS_DOWN, MS_RGHT, MS_WHLD, KC_HOME, KC_PGDN, KC_PGUP, KC_END, KC_DEL, KC_LALT,
+        _______, MS_BTN1, MS_LEFT, MS_DOWN, MS_RGHT, MS_WHLD, KC_HOME, KC_PGDN, KC_PGUP, KC_END, KC_DEL, KC_LALT,
         //-----------------------------------------------------------------------------------------------------------------||
-        _______, _______, _______, MS_BTN1, MS_BTN2, MS_BTN3
+        _______, _______, _______, MS_ACL2, MO(SIMBOLS), MS_ACL0
         //-----------------------------------------------------------------------------------------------------------------||
         ),
     [G_NUMS] = LAYOUT_split_3x6_3_ex2(
@@ -115,7 +114,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         //-----------------------------------------------------------------------------------------------------------------||
         _______, XXXXXXX, XXXXXXX, ALGR(KC_COMM), XXXXXXX, XXXXXXX, S(KC_EQL), S(KC_MINS), S(KC_COMM), S(KC_DOT), KC_BSLS, _______,
         //-----------------------------------------------------------------------------------------------------------------||
-        _______, MO(CONTROL), _______, _______, _______, _______
+        _______, MO(NUM_MOUSE), MO(CONTROL), _______, _______, _______
         //-----------------------------------------------------------------------------------------------------------------||
         ),
 
@@ -147,9 +146,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         //-----------------------------------------------------------------------------------------------------------------||
         XXXXXXX, RM_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, DB_TOGG, XXXXXXX, XXXXXXX, TG(GAMING), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
         //-----------------------------------------------------------------------------------------------------------------||
-        XXXXXXX, RM_NEXT, RM_HUEU, RM_SATU, RM_VALU, RM_SPDU, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, RM_NEXT, RM_HUEU, RM_SATU, RM_VALU, RM_SPDU, XXXXXXX, XXXXXXX, XXXXXXX, KC_BRID, KC_BRIU, XXXXXXX, XXXXXXX, XXXXXXX,
         //-----------------------------------------------------------------------------------------------------------------||
-        XXXXXXX, RM_PREV, RM_HUED, RM_SATD, RM_VALD, RM_SPDD, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, RM_PREV, RM_HUED, RM_SATD, RM_VALD, RM_SPDD, XXXXXXX, KC_SLEP, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
         //-----------------------------------------------------------------------------------------------------------------||
         _______, _______, _______, _______, _______, _______
         //-----------------------------------------------------------------------------------------------------------------||
@@ -243,6 +242,8 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     if (host_keyboard_led_state().caps_lock) {
         uint8_t index_r = g_led_config.matrix_co[7][4];
         RGB_MATRIX_INDICATOR_SET_COLOR(index_r, rgb.r, rgb.g, rgb.b);
+        uint8_t index_l = g_led_config.matrix_co[3][4];
+        RGB_MATRIX_INDICATOR_SET_COLOR(index_l, rgb.r, rgb.g, rgb.b);
     }
 
     return false;
@@ -368,10 +369,10 @@ void gui_finished(tap_dance_state_t *state, void *user_data) {
             tap_code(KC_LGUI);
             break;
         case TD_DOUBLE_HOLD:
-            layer_on(FNK_NPAD);
+            register_mods(MOD_LGUI);
             break;
         case TD_TRIPLE_HOLD:
-            register_mods(MOD_LGUI);
+            layer_on(FNK_NPAD);
         default:
             break;
     }
@@ -389,10 +390,10 @@ void gui_reset(tap_dance_state_t *state, void *user_data) {
         case TD_DOUBLE_TAP:
             break;
         case TD_DOUBLE_HOLD:
-            layer_off(FNK_NPAD);
+            unregister_mods(MOD_LGUI);
             break;
         case TD_TRIPLE_HOLD:
-            unregister_mods(MOD_LGUI);
+            layer_off(FNK_NPAD);
         default:
             break;
     }
@@ -405,7 +406,7 @@ tap_dance_action_t tap_dance_actions[] = {[G_MO] = ACTION_TAP_DANCE_FN_ADVANCED(
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case TD(G_MO):
-            return TAPPING_TERM - 110;
+            return TAPPING_TERM - 90;
         case LT(SIMBOLS, KC_ENT):
             return TAPPING_TERM - 90;
         default:
