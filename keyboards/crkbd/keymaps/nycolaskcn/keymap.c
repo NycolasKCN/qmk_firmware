@@ -72,13 +72,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         //-----------------------------------------------------------------------------------------------------------------||
         ),
 
+    // [GAMING] = LAYOUT_split_3x6_3_ex2(
+    //     //-----------------------------------------------------------------------------------------------------------------||
+    //     KC_ESC, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_F3, KC_VOLU, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_BSPC,
+    //     //-----------------------------------------------------------------------------------------------------------------||
+    //     KC_LSFT, KC_A, KC_S, KC_D, KC_F, KC_G, KC_F5, KC_VOLD, KC_H, KC_J, KC_K, KC_L, KC_SCLN, MT(MOD_RSFT, KC_QUOT),
+    //     //-----------------------------------------------------------------------------------------------------------------||
+    //     KC_LCTL, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_TAB,
+    //     //-----------------------------------------------------------------------------------------------------------------||
+    //     KC_LALT, KC_SPC, MO(G_NUMS), TD(G_MO), LT(SIMBOLS, KC_ENT), MO(FNK_NPAD)
+    //     //-----------------------------------------------------------------------------------------------------------------||
+    //     ),
     [GAMING] = LAYOUT_split_3x6_3_ex2(
         //-----------------------------------------------------------------------------------------------------------------||
-        KC_ESC, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_F3, KC_VOLU, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_BSPC,
+        KC_ESC, KC_T, KC_Q, KC_W, KC_E, KC_R, KC_F3, KC_VOLU, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_BSPC,
         //-----------------------------------------------------------------------------------------------------------------||
-        KC_LSFT, KC_A, KC_S, KC_D, KC_F, KC_G, KC_F5, KC_VOLD, KC_H, KC_J, KC_K, KC_L, KC_SCLN, MT(MOD_RSFT, KC_QUOT),
+        KC_LSFT, KC_G, KC_A, KC_S, KC_D, KC_F, KC_F5, KC_VOLD, KC_H, KC_J, KC_K, KC_L, KC_SCLN, MT(MOD_RSFT, KC_QUOT),
         //-----------------------------------------------------------------------------------------------------------------||
-        KC_LCTL, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_TAB,
+        KC_LCTL, KC_B, KC_Z, KC_X, KC_C, KC_V, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_TAB,
         //-----------------------------------------------------------------------------------------------------------------||
         KC_LALT, KC_SPC, MO(G_NUMS), TD(G_MO), LT(SIMBOLS, KC_ENT), MO(FNK_NPAD)
         //-----------------------------------------------------------------------------------------------------------------||
@@ -198,7 +209,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     hsv_t hsv;
     switch (layer) {
         case NUM_MOUSE:
-            hsv = (hsv_t){217, 131, 255};
+            hsv = (hsv_t){178, 128, 255};
             break;
         case SIMBOLS:
             hsv = (hsv_t){143, 147, 255};
@@ -260,6 +271,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     static bool alt_as_shift_active = false;
     static bool alt_as_ctrl_active  = false;
 
+#ifdef CONSOLE_ENABLE
+    uprintf("KL: kc: 0x%04X, col: %2u, row: %2u, pressed: %u, time: %5u, int: %u, count: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
+#endif
     switch (keycode) {
         case KC_LALT:
             if (record->event.pressed) {
@@ -363,10 +377,10 @@ void gui_finished(tap_dance_state_t *state, void *user_data) {
         case TD_SINGLE_HOLD:
             debug("Enable HYPR");
             layer_on(HYPR);
-            register_mods(MOD_LGUI);
+            // register_mods(MOD_LGUI);
             break;
         case TD_DOUBLE_TAP:
-            tap_code(KC_LGUI);
+            swap_hands_toggle();
             break;
         case TD_DOUBLE_HOLD:
             register_mods(MOD_LGUI);
@@ -385,7 +399,7 @@ void gui_reset(tap_dance_state_t *state, void *user_data) {
         case TD_SINGLE_HOLD:
             debug("RESETING Hypr");
             layer_off(HYPR);
-            unregister_mods(MOD_LGUI);
+            // unregister_mods(MOD_LGUI);
             break;
         case TD_DOUBLE_TAP:
             break;

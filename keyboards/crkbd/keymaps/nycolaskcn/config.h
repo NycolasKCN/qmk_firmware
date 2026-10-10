@@ -50,7 +50,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #    define RGB_MATRIX_KEYPRESSES // reacts to keypresses
 #    define RGB_MATRIX_SLEEP      // turn off effects when suspended
 #    define RGB_MATRIX_FRAMEBUFFER_EFFECTS
-#    define RGB_MATRIX_LED_FLUSH_LIMIT 16     // limits in milliseconds how frequently an animation will update the LEDs. 16 (16ms) is equivalent to limiting to 60fps (increases keyboard responsiveness)
+#    define RGB_MATRIX_LED_FLUSH_LIMIT 12     // limits in milliseconds how frequently an animation will update the LEDs. 16 (16ms) is equivalent to limiting to 60fps (increases keyboard responsiveness)
 #    define RGB_MATRIX_MAXIMUM_BRIGHTNESS 120 // limits maximum brightness of LEDs to 150 out of 255. Higher may cause the controller to crash.
 #    define RGB_MATRIX_HUE_STEP 8
 #    define RGB_MATRIX_SAT_STEP 10
@@ -61,7 +61,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #    define RGB_MATRIX_DEFAULT_HUE 14                      // Sets the default hue value, if none has been set
                                                            // 30, 68, 251
 #    define RGB_MATRIX_DEFAULT_SAT 30                      // Sets the default saturation value, if none has been set
-#    define RGB_MATRIX_DEFAULT_VAL 68                      // Sets the default brightness value, if none has been set
+#    define RGB_MATRIX_DEFAULT_VAL 60                      // Sets the default brightness value, if none has been set
 #    define RGB_MATRIX_DEFAULT_SPD 127                     // Sets the default animation speed, if none has been set
 
 #    define ENABLE_RGB_MATRIX_TYPING_HEATMAP
@@ -74,13 +74,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #    define ENABLE_RGB_MATRIX_SOLID_COLOR
 #endif
 
-#define MOUSEKEY_DELAY 10
-#define MOUSEKEY_INTERVAL 15
-#define MOUSEKEY_MOVE_DELTA 5
-#define MOUSEKEY_MAX_SPEED 3
-#define MOUSEKEY_TIME_TO_MAX 25
+#define MOUSEKEY_DELAY          0
+#define MOUSEKEY_INTERVAL       16
+#define MOUSEKEY_MAX_SPEED      6
+#define MOUSEKEY_TIME_TO_MAX    64
 
-#define MOUSEKEY_WHEEL_DELAY 10
+#define MOUSEKEY_WHEEL_DELAY 0
 #define MOUSEKEY_WHEEL_INTERVAL 80
 #define MOUSEKEY_WHEEL_DELTA 1
 #define MOUSEKEY_WHEEL_MAX_SPEED 8
