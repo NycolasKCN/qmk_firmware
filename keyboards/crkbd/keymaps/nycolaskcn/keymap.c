@@ -16,8 +16,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <stdint.h>
 #include "action.h"
 #include "action_layer.h"
+#include "action_util.h"
 #include "keycodes.h"
 #include "modifiers.h"
 #include QMK_KEYBOARD_H
@@ -204,9 +206,10 @@ bool is_a_valid_led(uint8_t led_index, uint8_t led_min, uint8_t led_max) {
 }
 
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
-    uint8_t layer = get_highest_layer(layer_state);
+    uint8_t layer     = get_highest_layer(layer_state);
+    bool    isSwapped = is_swap_hands_on();
+    hsv_t   hsv;
 
-    hsv_t hsv;
     switch (layer) {
         case NUM_MOUSE:
             hsv = (hsv_t){178, 128, 255};
@@ -254,6 +257,13 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         uint8_t index_r = g_led_config.matrix_co[7][4];
         RGB_MATRIX_INDICATOR_SET_COLOR(index_r, rgb.r, rgb.g, rgb.b);
         uint8_t index_l = g_led_config.matrix_co[3][4];
+        RGB_MATRIX_INDICATOR_SET_COLOR(index_l, rgb.r, rgb.g, rgb.b);
+    }
+
+    if (isSwapped) {
+        uint8_t index_r = g_led_config.matrix_co[7][5];
+        RGB_MATRIX_INDICATOR_SET_COLOR(index_r, rgb.r, rgb.g, rgb.b);
+        uint8_t index_l = g_led_config.matrix_co[3][5];
         RGB_MATRIX_INDICATOR_SET_COLOR(index_l, rgb.r, rgb.g, rgb.b);
     }
 
